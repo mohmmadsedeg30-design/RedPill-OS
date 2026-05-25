@@ -1,0 +1,36 @@
+name: Build RedPill OS ISO
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install live-build
+      run: |
+        sudo apt update
+        sudo apt install -y live-build
+
+    - name: Make scripts executable
+      run: |
+        chmod +x config/chroot_local-includes/usr/local/bin/*
+
+    - name: Configure and build ISO
+      run: |
+        sudo lb config --architecture amd64 --distribution bookworm --bootstrap-flavour minimal --archive-areas "main contrib non-free non-free-firmware" --debian-installer live --binary-images iso-hybrid --bootappend-live "locales=en_US.UTF-8 keyboard-layouts=us timezone=Etc/UTC hostname=redpill username=redteam" --apt-recommends no
+        sudo lb build
+
+    - name: Upload ISO artifact
+      uses: actions/upload-artifact@v3
+      with:
+        name: RedPill-OS-ISO
+        path: live-image-amd64.hybrid.iso
+        
