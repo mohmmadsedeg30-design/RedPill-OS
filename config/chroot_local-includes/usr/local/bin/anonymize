@@ -1,0 +1,3 @@
+#!/bin/bash
+service tor start
+proxychains4 bash

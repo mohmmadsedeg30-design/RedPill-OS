@@ -1,0 +1,14 @@
+live-build
+sudo
+xfce4
+xfce4-goodies
+tightvncserver
+wget
+curl
+git
+nmap
+metasploit-framework
+sqlmap
+tor
+proxychains4
+dnsrecon
